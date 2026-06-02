@@ -21,9 +21,16 @@ function SkillCard({
 	const [copied, setCopied] = useState(false);
 
 	function handleCopy() {
-		navigator.clipboard.writeText(installCommand);
-		setCopied(true);
-		setTimeout(() => setCopied(false), 2000);
+		navigator.clipboard
+			.writeText(installCommand)
+			.then(() => {
+				setCopied(true);
+				const timer = setTimeout(() => setCopied(false), 2000);
+				return () => clearTimeout(timer);
+			})
+			.catch((err) => {
+				console.error("Failed to copy to clipboard:", err);
+			});
 	}
 
 	return (
@@ -52,7 +59,11 @@ function SkillCard({
 						<img src="/logo512.png" alt="author avatar" className="avatar" />
 						<div className="author-copy">
 							<p>Adryan</p>
-							<p>{new Date(createdAt as string).toLocaleDateString()}</p>
+							<p>
+								{createdAt
+									? new Date(createdAt).toLocaleDateString()
+									: "Date unknown"}
+							</p>
 						</div>
 					</div>
 					<p className="category">{category}</p>
