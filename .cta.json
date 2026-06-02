@@ -1,0 +1,25 @@
+{
+  "projectName": "skilled",
+  "mode": "file-router",
+  "typescript": true,
+  "packageManager": "pnpm",
+  "includeExamples": false,
+  "tailwind": true,
+  "addOnOptions": {},
+  "envVarValues": {
+    "VITE_CLERK_PUBLISHABLE_KEY": "app_3EXwzS1tBYPmwJklH5AWcvOb4nj"
+  },
+  "git": true,
+  "install": true,
+  "routerOnly": false,
+  "version": 1,
+  "framework": "react",
+  "chosenAddOns": [
+    "biome",
+    "netlify",
+    "tanstack-query",
+    "compiler",
+    "clerk",
+    "shadcn"
+  ]
+}
