@@ -1,4 +1,4 @@
-export type SkillRecord = {
+type SkillRecord = {
 	id: string;
 	title: string; // Write Code
 	slug: string; // write-code

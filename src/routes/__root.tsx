@@ -8,7 +8,7 @@ import {
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import Crosshair from "#/components/Crosshair";
 import Navbar from "#/components/Navbar";
-import ClerkProvider from "../integrations/clerk/provider";
+import Providers from "#/providers";
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
 import appCss from "../styles.css?url";
 
@@ -47,12 +47,12 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 
 function RootDocument({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang="en">
+		<html lang="en" suppressHydrationWarning>
 			<head>
 				<HeadContent />
 			</head>
 			<body className="font-sans antialiased wrap-anywhere">
-				<ClerkProvider>
+				<Providers>
 					<div id="root-layout">
 						<header>
 							<div className="frame">
@@ -61,10 +61,11 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 								<Crosshair />
 							</div>
 						</header>
+						<main>
+							<div className="frame">{children}</div>
+						</main>
 					</div>
-					<main>
-						<div className="frame">{children}</div>
-					</main>
+
 					<TanStackDevtools
 						config={{
 							position: "bottom-right",
@@ -77,7 +78,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 							TanStackQueryDevtools,
 						]}
 					/>
-				</ClerkProvider>
+				</Providers>
 				<Scripts />
 			</body>
 		</html>
