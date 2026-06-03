@@ -1,6 +1,6 @@
+import { ClerkProvider } from "@clerk/tanstack-react-start";
 import { ScriptOnce } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import ClerkProvider from "#/integrations/clerk/provider";
 
 const themeScript = `(function() {
   try {

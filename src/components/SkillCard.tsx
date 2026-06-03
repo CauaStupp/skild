@@ -7,7 +7,7 @@ import {
 	Copy,
 	MessageSquare,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function SkillCard({
 	authorEmail,
@@ -19,19 +19,30 @@ function SkillCard({
 	title,
 }: SkillRecord) {
 	const [copied, setCopied] = useState(false);
+	const timerRef = useRef<NodeJS.Timeout | null>(null);
 
 	function handleCopy() {
 		navigator.clipboard
 			.writeText(installCommand)
 			.then(() => {
 				setCopied(true);
-				const timer = setTimeout(() => setCopied(false), 2000);
-				return () => clearTimeout(timer);
+				timerRef.current = setTimeout(() => {
+					setCopied(false);
+					timerRef.current = null;
+				}, 2000);
 			})
 			.catch((err) => {
 				console.error("Failed to copy to clipboard:", err);
 			});
 	}
+
+	useEffect(() => {
+		return () => {
+			if (timerRef.current) {
+				clearTimeout(timerRef.current);
+			}
+		};
+	}, []);
 
 	return (
 		<article className="skill-card">
@@ -97,10 +108,9 @@ function SkillCard({
 							<ArrowBigUp size={16} fill="currentColor" />
 							<span>{tags.length}</span>
 						</button>
-
 						<div className="comments">
 							<MessageSquare size={14} />
-							<span>{authorEmail ? 1 : 0}</span>
+							<span>0</span>
 						</div>
 					</div>
 
